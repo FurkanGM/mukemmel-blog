@@ -38,8 +38,6 @@ const Home = ({ blogs }) => (
 Home.getInitialProps = async ({ req }) => {
   const res = await fetch(process.env.baseUrl+"/api/posts");
   const json = await res.json();
-  const lpost = await fetch(process.env.baseUrl+"/api/lastpost");
-  const lpjson = await lpost.json();
   return { blogs: json.blogs};
 };
 
