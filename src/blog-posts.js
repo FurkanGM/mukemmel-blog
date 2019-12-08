@@ -1,22 +1,22 @@
+const db = require('../lib/db');
+const escape = require('sql-template-strings');
+
 export const getPosts = () => {
-  return [
-    {
-      title: "1500TL ödül! Sen de yarışmaya katıl!",
-      slug: "yarisma",
-      details: require("./posts/yarisma.md").default,
-      date: "5 Aralık 2019"
-    },
-    {
-      title: "Örnek yazı",
-      slug: "ornek-yazi",
-      details: require("./posts/ornek-yazi.md").default,
-      date: "3 Aralık 2019"
-    },
-    {
-      title: "Merhaba dünya!",
-      slug: "merhaba",
-      details: require("./posts/merhaba.md").default,
-      date: "1 Aralık 2019"
-    }
-  ];
+    let a = db.query(`
+      SELECT *
+      FROM articles
+      ORDER BY article_id
+      LIMIT 5
+    `);
+
+    console.log(a);
+    let page = 1;
+    const limit = 9;
+    if (page < 1) page = 1;
+    const articles = db.query(escape`
+      SELECT *
+      FROM articles
+      ORDER BY article_id
+      LIMIT 5
+    `);
 };

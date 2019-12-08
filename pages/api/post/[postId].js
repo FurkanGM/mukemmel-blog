@@ -1,9 +1,16 @@
-import { getPosts } from "../../../src/blog-posts";
+const db = require('../../../lib/db');
 
-const posts = getPosts();
 
 export default (req, res) => {
-  res.json({
-    post: posts.find(post => post.slug === req.query.postId)
+  let sql = db.query(`
+      SELECT *
+      FROM articles
+    `);
+  sql.then(function (result) {
+    res.json({
+      post: result.find(post => post.article_slug === req.query.postId)
+    })
+  }).catch((err) => {
+    console.log(err);
   });
 };
