@@ -1,26 +1,32 @@
-import React from "react";
-import fetch from "isomorphic-unfetch";
+import fetch from 'isomorphic-unfetch';
+import { useAsync } from "react-async"
 
-const Sidebar = ({ last }) => (
-    <div>
-        <div className="col-lg-4">
-            {last.map(post => (
-                <a className="lastposts">
-                    <img src={post.article_img} alt="" className="lastposts__img" />
-                    <div className="lastposts__content">
-                        <div className="lastposts__title">
-                            {post.article_title}
-                        </div>
-                        <div className="lastposts__date">{post.article_date}</div>
-                    </div>
-                </a>
-            ))}
-        </div>
-    </div>
-);
-export default async (req, res) => {
-    const lpost = await fetch(process.env.baseUrl+"/api/lastpost");
-    const json = await lpost.json();
-    console.log(json)
-    res.json({ json })
+const loadPlayer = async () => {
+    const res = await fetch(process.env.baseUrl+"/api/lastpost")
+    if (!res.ok) throw new Error(res.statusText);
+    return res.json()
 };
+
+const Post = () => {
+    const { data, error, isPending } = useAsync({ promiseFn: loadPlayer, playerId: 1 })
+    if (error) return `Something went wrong: ${error.message}`;
+    if (data)
+        return (
+            <div className="col-md-4">
+                {data.posts.map((result) => (
+                    <a className="lastposts">
+                        <img src={result.article_img} alt="" className="lastposts__img" />
+                        <div className="lastposts__content">
+                            <div className="lastposts__title">
+                                {result.article_title}
+                            </div>
+                            <div className="lastposts__date">{result.article_date}</div>
+                        </div>
+                    </a>
+                ))}
+            </div>
+        );
+    return null
+};
+
+export default Post;
