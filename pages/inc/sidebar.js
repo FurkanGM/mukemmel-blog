@@ -9,7 +9,7 @@ const loadPlayer = async () => {
 
 const Post = () => {
     const { data, error, isPending } = useAsync({ promiseFn: loadPlayer, playerId: 1 })
-    if (error) return `Something went wrong: ${error.message}`;
+    if (error) return `Hata oluştu: ${error.message}`;
     if (data)
         return (
             <div className="col-md-4">
