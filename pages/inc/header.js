@@ -8,7 +8,6 @@ const Header = () => (
             <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
             <title>Hello, world!</title>
 
-            <script src="/assets/js/bootstrap.min.js"/>
             <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
             <link rel="stylesheet" href="/assets/css/style.css" />
 

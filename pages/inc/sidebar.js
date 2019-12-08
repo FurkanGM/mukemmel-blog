@@ -14,7 +14,7 @@ const Post = () => {
         return (
             <div className="col-md-4">
                 {data.posts.map((result) => (
-                    <a className="lastposts">
+                    <a href={"/blog/"+result.article_slug} className="lastposts">
                         <img src={result.article_img} alt="" className="lastposts__img" />
                         <div className="lastposts__content">
                             <div className="lastposts__title">
