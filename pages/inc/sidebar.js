@@ -1,14 +1,14 @@
 import fetch from 'isomorphic-unfetch';
 import { useAsync } from "react-async"
 
-const loadPlayer = async () => {
-    const res = await fetch(process.env.baseUrl+"/api/lastpost")
+const lastpost = async () => {
+    const res = await fetch(process.env.baseUrl+"/api/lastpost");
     if (!res.ok) throw new Error(res.statusText);
     return res.json()
 };
 
 const Post = () => {
-    const { data, error, isPending } = useAsync({ promiseFn: loadPlayer, playerId: 1 })
+    const { data, error } = useAsync({ promiseFn: lastpost });
     if (error) return `Hata oluştu: ${error.message}`;
     if (data)
         return (

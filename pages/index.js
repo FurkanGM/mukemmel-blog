@@ -10,7 +10,7 @@ const Home = ({ blogs }) => (
       <div className="row">
         <div className="col-lg-8">
           {blogs.map(post => (
-          <a href={post.article_slug} className="article">
+          <a href={"blog/"+post.article_slug} className="article">
             <div className="article__img">
               <div className="article__tag">{post.article_category}</div>
               <img src={post.article_img} alt={post.article_description} />
