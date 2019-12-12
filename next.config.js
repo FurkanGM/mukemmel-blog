@@ -1,6 +1,6 @@
 module.exports = {
   env: {
-    baseUrl: process.env.BASE_URL || 'https://personel-blog.herokuapp.com'
+    baseUrl: process.env.NODE_ENV === "development" ? 'http://localhost:3000' : 'https://personel-blog.herokuapp.com'
   },
   modules: [
     '@nuxtjs/axios',

@@ -1,5 +1,35 @@
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800");
 
+// RESPONSIVE
+$screen-sm-min: 576px;
+$screen-md-min: 768px;
+$screen-lg-min: 992px;
+$screen-xl-min: 1200px;
+
+@mixin sm {
+  @media (max-width: #{$screen-sm-min}) {
+    @content;
+  }
+}
+
+@mixin md {
+  @media (max-width: #{$screen-md-min}) {
+    @content;
+  }
+}
+
+@mixin lg {
+  @media (max-width: #{$screen-lg-min}) {
+    @content;
+  }
+}
+
+@mixin xl {
+  @media (max-width: #{$screen-xl-min}) {
+    @content;
+  }
+}
+
 body{
   background-color:#f9f9f9;
   font-family: 'Open Sans', sans-serif;
@@ -25,6 +55,10 @@ body{
   display: flex;
   margin-bottom: 25px;
 
+  @include md {
+    display: block;
+  }
+
   &__img{
     flex: 0 0 auto;
     height: 220px;
@@ -34,6 +68,9 @@ body{
       width: 100%;
       height: 100%;
       object-fit: cover;
+    }
+    @include md {
+      width: 100%;
     }
   }
 
