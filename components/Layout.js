@@ -15,6 +15,7 @@ class Layout extends React.Component {
                     <Sidebar />
                 </div>
             </div>
+            <Footer />
         </div>
     }
 }

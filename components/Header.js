@@ -1,13 +1,33 @@
 import React from "react";
 import Head from "next/dist/next-server/lib/head";
+import axios from "axios";
 
 class Header extends React.Component {
+
+    constructor() {
+        super();
+        this.state = {
+            data: ""
+        };
+    }
+
+    componentDidMount() {
+        axios
+            .get(
+                process.env.baseUrl+"/api/navbar"
+            )
+            .then(({ data }) => {
+                this.setState({ data: data.navbar });
+            });
+    }
+
     render() {
+        const { data } = this.state;
         return <div>
             <Head>
                 <meta charSet="utf-8" />
                 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-                <title>Hello, world!</title>
+                <title>Furkan Gezek</title>
 
                 <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
                 <link rel="stylesheet" href="/assets/css/style.css" />
@@ -22,18 +42,18 @@ class Header extends React.Component {
                     </button>
                     <div className="collapse navbar-collapse flex-row-reverse" id="navbarNav">
                         <ul className="navbar-nav">
-                            <li className="nav-item active">
-                                <a className="nav-link" href="#">Home <span className="sr-only">(current)</span></a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="#">Features</a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="#">Pricing</a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link disabled" href="#">Disabled</a>
-                            </li>
+                            {
+                                data ? (
+                                    data.map((result) => (
+                                        <li className="nav-item active">
+                                            <a className="nav-link" href={result.navbar_link} alt={result.navbar_alt}>{result.navbar_text}</a>
+                                        </li>
+                                    )
+                                    )
+                                ) : (
+                                    <div></div>
+                                )
+                            }
                         </ul>
                     </div>
                 </div>

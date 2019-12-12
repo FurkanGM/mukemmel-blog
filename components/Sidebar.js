@@ -1,6 +1,4 @@
-import fetch from "isomorphic-unfetch";
 import React, { Component } from 'react';
-import Layout from "./Layout";
 import axios from "axios";
 
 class Sidebar extends Component {
