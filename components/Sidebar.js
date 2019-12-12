@@ -24,7 +24,7 @@ class Sidebar extends Component {
     render() {
         const { data } = this.state;
         return data ? (
-            <div className="col-md-4">
+            <div className="col-sm-12 col-md-12 col-lg-4">
                 {data.posts.map((result) => (
                     <div>
                         <a href={"/blog/" +result.article_slug} className="lastposts">

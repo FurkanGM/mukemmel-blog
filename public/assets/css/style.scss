@@ -232,6 +232,7 @@ body{
     font-weight: 600;
     margin-bottom: 17px;
     transition: .3s;
+    text-decoration: none !important;
   }
 
   &__text{
@@ -248,6 +249,7 @@ body{
   &:hover &__title{
     color: grey;
     transition: .3s;
+
   }
 
   &:hover &__date{
@@ -262,4 +264,13 @@ body{
   background: #fff;
   box-shadow: 0 0 0 1px #e6e6e6;
   margin-top: 30px;
+}
+
+.nav-link{
+  transition: .5s;
+  padding-bottom: 5px;
+  &:hover{
+    border-bottom: 2px solid black;
+    transition: .5s;
+  }
 }
