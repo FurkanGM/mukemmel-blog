@@ -1,15 +1,12 @@
-module.exports = {
+const withSass = require('@zeit/next-sass');
+const withCSS = require("@zeit/next-css");
+module.exports = withSass(withCSS({
   env: {
     baseUrl: process.env.NODE_ENV === "development" ? 'http://localhost:3000' : 'https://personel-blog.herokuapp.com'
   },
   modules: [
     '@nuxtjs/axios',
-  ],
-  webpack: config => {
-    config.module.rules.push({
-      test: /\.md$/,
-      use: "raw-loader"
-    });
-    return config;
-  }
-};
+    '@zeit/next-css',
+    '@zeit/next-sass'
+  ]
+}));

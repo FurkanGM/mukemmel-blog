@@ -1,6 +1,8 @@
 import React from "react";
 import Head from "next/dist/next-server/lib/head";
 import axios from "axios";
+import "../public/assets/css/bootstrap.min.css";
+import "../public/assets/css/style.scss";
 
 class Header extends React.Component {
 
@@ -29,8 +31,7 @@ class Header extends React.Component {
                 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
                 <title>Furkan Gezek</title>
 
-                <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
-                <link rel="stylesheet" href="/assets/css/style.css" />
+                <script src="https://use.fontawesome.com/452826394c.js"/>
 
             </Head>
             <nav className="navbar navbar-expand-lg navbar-light">
