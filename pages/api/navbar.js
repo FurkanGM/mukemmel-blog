@@ -6,8 +6,7 @@ export default async (req, res) => {
       SELECT *
       FROM navbar
     `);
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With");
-    next();
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Headers", "X-Requested-With");
     await res.json({ navbar })
 };

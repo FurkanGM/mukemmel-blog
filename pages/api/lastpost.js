@@ -7,5 +7,7 @@ export default async (req, res) => {
       FROM articles
       LIMIT 5
     `);
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Headers", "X-Requested-With");
   res.json({ posts })
 };
