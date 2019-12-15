@@ -9,7 +9,7 @@ Dünyanın en güzel blog'u, www.furkangezek.com.tr
 - [x] Özel Domain
 - [ ] Yazı paylaşma linkleri
 - [x] URL Env değişkeni (Nerede çalıştığını anlayıp baseURL set ediyor)
-- [ ] Google analytics
-- [ ] Yönetim Paneli
-- [x] Veritabanı Entegrasyonu
+- [ ] Google analytics entegrasyonu
+- [ ] Yönetim Paneli entegrasyonu
+- [x] Veritabanı entegrasyonu
 - [x] Yazılara yorum bırakabilme
