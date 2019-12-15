@@ -20,8 +20,7 @@ class Header extends React.Component {
                 {
                     headers: {
                         "Access-Control-Allow-Origin": "*",
-                        "Access-Control-Allow-Headers": true,
-                        "Origin, X-Requested-With, Content-Type, Accept": true
+                        "Access-Control-Allow-Headers": true
                     }
                 }
 
