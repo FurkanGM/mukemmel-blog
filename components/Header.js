@@ -18,7 +18,9 @@ class Header extends React.Component {
             .get(
                 process.env.baseUrl+"/api/navbar",
                 {
-                    baseURL: process.env.baseUrl
+                    headers: {
+                        "Access-Control-Allow-Origin": "*"
+                    }
                 }
 
             )
