@@ -8,6 +8,5 @@ export default async (req, res) => {
     `);
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
-    next();
     await res.json({ navbar })
 };
