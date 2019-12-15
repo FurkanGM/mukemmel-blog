@@ -16,13 +16,7 @@ class Header extends React.Component {
     componentDidMount() {
         axios
             .get(
-                process.env.baseUrl+"/api/navbar",
-                {
-                    headers: {
-                        "Access-Control-Allow-Origin": "*"
-                    }
-                }
-
+                process.env.baseUrl+"/api/navbar"
             )
             .then(({ data }) => {
                 this.setState({ data: data.navbar });
