@@ -80,6 +80,8 @@ app.prepare()
                 raw: true,
             }).then(post => {
                 if (post){
+                    res.setHeader("Access-Control-Allow-Origin", "*");
+                    res.setHeader("Access-Control-Allow-Headers", "X-Requested-With");
                     res.status(200).json(post);
                 }else{
                     res.status(404).end("Not Found")
@@ -92,6 +94,8 @@ app.prepare()
                 raw: true,
             }).then(navbar => {
                 if (navbar){
+                    res.setHeader("Access-Control-Allow-Origin", "*");
+                    res.setHeader("Access-Control-Allow-Headers", "X-Requested-With");
                     res.status(200).json(navbar);
                 }else{
                     res.status(404).end("Not Found")
