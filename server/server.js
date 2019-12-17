@@ -33,7 +33,7 @@ app.prepare()
                 raw: true,
             }).then(post => {
                 if (post){
-                    comment.findOne({
+                    comment.findAll({
                         where: {
                             article_id: post.article_id
                         },
