@@ -13,7 +13,7 @@ class Sidebar extends Component {
     componentDidMount() {
         axios
             .get(
-                process.env.baseUrl+"/api/lastpost"
+                process.env.baseUrl+"/api/lastposts"
             )
             .then(({ data }) => {
                 this.setState({ data: data });
@@ -25,7 +25,7 @@ class Sidebar extends Component {
         const { data } = this.state;
         return data ? (
             <div className="col-sm-12 col-md-12 col-lg-4">
-                {data.posts.map((result) => (
+                {data.map((result) => (
                     <div>
                         <a href={"/blog/" +result.article_slug} className="lastposts">
                             <img src={result.article_img} alt="" className="lastposts__img" />

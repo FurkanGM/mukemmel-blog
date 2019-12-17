@@ -19,7 +19,7 @@ class Header extends React.Component {
                 process.env.baseUrl+"/api/navbar"
             )
             .then(({ data }) => {
-                this.setState({ data: data.navbar });
+                this.setState({ data: data });
             });
     }
 
@@ -51,9 +51,7 @@ class Header extends React.Component {
                                         </li>
                                     )
                                     )
-                                ) : (
-                                    <div></div>
-                                )
+                                ) : ""
                             }
                         </ul>
                     </div>

@@ -10,23 +10,26 @@ class BlogPost extends React.Component {
     }
 
     static async getInitialProps({ query }) {
-        const res = await fetch(process.env.baseUrl+`/api/post/${query.postId}`);
+        const res = await fetch(process.env.baseUrl+`/api/post/${query.postSlug}`);
         const json = await res.json();
         return {data: json};
     }
 
     getCommentCount(){
-        return this.props.data[1].length;
+        if (this.props.data[1] !== null)
+            return this.props.data[1].length;
+        else
+            return 0;
     }
 
     getComments(){
-        if (this.props.data[1].length > 0){
+        if (this.props.data[1] !== null){
             return this.props.data[1].map((data) => (
                 <div className="comment">
                     <div className="author">
                         <div className="avatar"><span className="fa-stack fa-lg"><i
-                            className="fa fa-circle fa-stack-2x"></i><i
-                            className="fa fa-user fa-stack-1x fa-inverse"></i></span></div>
+    className="fa fa-circle fa-stack-2x"/><i
+    className="fa fa-user fa-stack-1x fa-inverse"/></span></div>
                         <div className="name">{data.author_name}</div>
                         <div className="date">{data.comment_date}</div>
                     </div>
@@ -72,17 +75,17 @@ class BlogPost extends React.Component {
             <Layout>
                 <div className="post">
                     <div className="post__img">
-                        <div className="post__tag">{this.props.data[0][0].article_category}</div>
-                        <img src={this.props.data[0][0].article_img} alt={this.props.data[0][0].article_description} />
+                        <div className="post__tag">{this.props.data[0].article_category}</div>
+                        <img src={this.props.data[0].article_img} alt={this.props.data[0].article_description} />
                     </div>
                     <div className="post__content">
                         <div className="post__title">
-                            {this.props.data[0][0].article_title}
+                            {this.props.data[0].article_title}
                         </div>
-                        <div className="post__date">{this.props.data[0][0].article_date}</div>
+                        <div className="post__date">{this.props.data[0].article_date}</div>
                         <div className="post__date">{this.getCommentCount()} Yorum</div>
                         <div className="post__text">
-                            {this.props.data[0][0].article_content}
+                            {this.props.data[0].article_content}
                         </div>
                     </div>
                 </div>
