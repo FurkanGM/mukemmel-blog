@@ -23,7 +23,7 @@ class BlogPost extends React.Component {
     }
 
     getComments(){
-        if (this.props.data[1] !== null){
+        if (this.props.data[1].length > 0){
             return this.props.data[1].map((data) => (
                 <div className="comment">
                     <div className="author">
