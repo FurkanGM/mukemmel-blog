@@ -124,8 +124,12 @@ app.prepare()
                 comment_date: dateformat(new Date(), 'dd.mm.yyyy H:MM:ss'),
                 status: 1
             }).then(comment => {
+                res.setHeader("Access-Control-Allow-Origin", "*");
+                res.setHeader("Access-Control-Allow-Headers", "X-Requested-With");
                 res.status(200).send({error: "no"});
             }).catch(e => {
+                res.setHeader("Access-Control-Allow-Origin", "*");
+                res.setHeader("Access-Control-Allow-Headers", "X-Requested-With");
                 res.status(404).send(e);
             });
         });
