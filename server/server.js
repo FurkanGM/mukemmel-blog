@@ -4,7 +4,8 @@ const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
 const db = require('../lib/db');
-
+const bodyParser = require('body-parser');
+const dateformat = require('dateformat');
 // MODELS
 const post = require('./models/post');
 const page = require('./models/page');
@@ -13,8 +14,10 @@ const navbar = require('./models/navbar');
 
 app.prepare()
     .then(() => {
-
         const server = express();
+        server.use(bodyParser.urlencoded({ extended: true }));
+        server.use(bodyParser.json());
+
         db
             .authenticate()
             .then(() => {
@@ -37,12 +40,15 @@ app.prepare()
                         where: {
                             article_id: post.article_id
                         },
+                        order: [
+                            ['comment_id', 'DESC']
+                        ],
                         raw: true
                     }).then(comments => {
                         res.status(200).json([post,comments]);
                     })
                 }else{
-                    res.status(404).end("Not Found")
+                    res.status(404).json({error: true});
                 }
             });
         });
@@ -57,7 +63,7 @@ app.prepare()
                 if (page){
                     res.status(200).json(page);
                 }else{
-                    res.status(404).end("Not Found")
+                    res.status(404).json({error: true});
                 }
             });
         });
@@ -65,11 +71,14 @@ app.prepare()
         server.get('/api/posts', (req, res) => {
             post.findAll({
                 raw: true,
+                order: [
+                    ['article_id', 'DESC']
+                ]
             }).then(post => {
                 if (post){
                     res.status(200).json(post);
                 }else{
-                    res.status(404).end("Not Found")
+                    res.status(404).json({error: true});
                 }
             });
         });
@@ -78,13 +87,16 @@ app.prepare()
             post.findAll({
                 limit: 5,
                 raw: true,
+                order: [
+                    ['article_id', 'DESC']
+                ]
             }).then(post => {
                 if (post){
                     res.setHeader("Access-Control-Allow-Origin", "*");
                     res.setHeader("Access-Control-Allow-Headers", "X-Requested-With");
                     res.status(200).json(post);
                 }else{
-                    res.status(404).end("Not Found")
+                    res.status(404).json({error: true});
                 }
             });
         });
@@ -98,8 +110,23 @@ app.prepare()
                     res.setHeader("Access-Control-Allow-Headers", "X-Requested-With");
                     res.status(200).json(navbar);
                 }else{
-                    res.status(404).end("Not Found")
+                    res.status(404).json({error: true});
                 }
+            });
+        });
+
+        server.post('/api/post/:slug/addcomment', (req,res) => {
+            comment.create({
+                article_id: req.body.aid,
+                author_name: req.body.name,
+                author_email: req.body.email,
+                author_content: req.body.content,
+                comment_date: dateformat(new Date(), 'dd.mm.yyyy H:MM:ss'),
+                status: 1
+            }).then(comment => {
+                res.status(200).send({error: "no"});
+            }).catch(e => {
+                res.status(404).send(e);
             });
         });
 

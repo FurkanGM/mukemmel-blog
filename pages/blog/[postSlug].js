@@ -1,18 +1,26 @@
 import React from "react";
 import fetch from "isomorphic-unfetch";
 import Layout from "../../components/Layout";
+import Error from "next/error";
 import Axios from "axios";
+import Router from "next/router";
 
 class BlogPost extends React.Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            firstName: '',
+        };
     }
 
     static async getInitialProps({ query }) {
-        const res = await fetch(process.env.baseUrl+`/api/post/${query.postSlug}`);
-        const json = await res.json();
-        return {data: json};
+        var res = await fetch(process.env.baseUrl+`/api/post/${query.postSlug}`);
+        var json = await res.json();
+        if (json.error !== true) {
+            return {data: json};
+        }
+        return {data : json};
     }
 
     getCommentCount(){
@@ -43,34 +51,48 @@ class BlogPost extends React.Component {
         }
     }
 
-    addComment(){
-        Axios.post("/api/blog/comments/add", [])
-    }
-
     handleChange = evt => {
         this.setState({
             [evt.target.name]: evt.target.value,
         });
     };
+
     handleSubmit = evt => {
         evt.preventDefault();
-        //making a post request with the fetch API
-        fetch('/api/blog/addComment', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                firstName:this.state.name
+        const { name, email, content } = this.state;
+
+        const data = {
+            aid: this.props.data[0].article_id,
+            name,
+            email,
+            content,
+        };
+        const slug = this.props.data[0].article_slug;
+        Axios
+            .post(process.env.baseUrl+'/api/post/' + slug + "/addcomment", data)
+            .then(function (response) {
+                document.getElementById('result').className = "";
+                document.getElementById('result').classList.add('alert');
+                document.getElementById('result').classList.add('alert-success');
+                document.getElementById('result').innerText = "Yorumunuz başarıyla eklendi.";
+                setTimeout(function () {
+                    Router.push('/blog/' + slug)
+                }, 1500)
             })
-        })
-            .then(response => response.json())
-            .then(data => console.log(data))
-            .catch(error => console.log(error))
+            .catch(function (error) {
+                document.getElementById('result').className = "";
+                document.getElementById('result').classList.add('alert');
+                document.getElementById('result').classList.add('alert-danger');
+                document.getElementById('result').innerText = "Yorum gönderilmeye çalışırken hata oluştu!";
+                setTimeout(function () {
+                    Router.push('/blog/' + slug)
+                }, 1500)
+            });
     };
 
     render() {
+        if (this.props.data.error === true)
+            return <Error statusCode={404}/>;
         return (
             <Layout>
                 <div className="post">
@@ -92,7 +114,8 @@ class BlogPost extends React.Component {
                 <div className="comments">
                     <div className="title">Yorumlar</div>
                     <div className="new-comment">
-                        <form onSubmit={this.handleSubmit} >
+                        <div id="result" />
+                        <form  onSubmit={this.handleSubmit} >
                             <div className="input-group mb-3">
                                 <div className="input-group-prepend">
                                     <span className="input-group-text" id="basic-addon1">@</span>
@@ -110,7 +133,7 @@ class BlogPost extends React.Component {
                             <div className="input-group mb-3">
                                 <textarea className="form-control" aria-label="With textarea" name="content" placeholder="Yorumunuzu buraya girin." onChange={this.handleChange} />
                             </div>
-                            <button className="btn btn-block btn-success">Gönder</button>
+                            <button className="btn btn-block btn-success" type="submit">Gönder</button>
                         </form>
                     </div>
                     {
