@@ -69,11 +69,7 @@ class BlogPost extends React.Component {
         };
         const slug = this.props.data[0].article_slug;
         Axios
-            .post(process.env.baseUrl+'/api/post/' + slug + "/addcomment", data, {
-                headers: {
-                    "Access-Control-Allow-Origin": "*"
-                }
-            })
+            .post('/api/post/' + slug + "/addcomment", data)
             .then(function (response) {
                 document.getElementById('result').className = "";
                 document.getElementById('result').classList.add('alert');
